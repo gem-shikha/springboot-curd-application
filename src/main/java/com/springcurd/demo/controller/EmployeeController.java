@@ -19,9 +19,9 @@ import java.util.List;
 @OpenAPIDefinition(info = @Info(title = "Employee Controller", description = "Employee details Rest API"))
 public class EmployeeController {
 
-    Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+    private Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     /**
      * Method to get the details of all the employee
@@ -46,7 +46,7 @@ public class EmployeeController {
      */
     @Operation(summary = "Get all employee by its id")
     @GetMapping("/{id}")
-    ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
+    ResponseEntity<Employee> getEmployeeById(@PathVariable final Integer id) {
         Employee employee = employeeService.getEmployeeById(id);
         if (employee == null) {
             logger.error("Employee details not found by its id!");
@@ -64,13 +64,13 @@ public class EmployeeController {
      */
     @Operation(summary = "Add an employee")
     @PostMapping
-    ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+    ResponseEntity<Employee> addEmployee(@RequestBody final Employee employee) {
         Employee emp = employeeService.addEmployee(employee);
               if (emp == null) {
                 logger.error("Employee details not created!");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
               }
-                logger.info("Employee details created successfully : {} ",emp);
+                logger.info("Employee details created successfully : ", emp);
                 return new ResponseEntity<>(emp, HttpStatus.OK);
       }
 
@@ -81,15 +81,14 @@ public class EmployeeController {
      */
     @Operation(summary = "Update an employee by its id")
     @PutMapping("/{id}")
-    ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee employee){
+    ResponseEntity<Employee> updateEmployee(@PathVariable final Integer id, @RequestBody final Employee employee) {
         Employee emp = employeeService.updateEmployee(id, employee);
-            if(emp == null){
+            if (emp == null) {
                 logger.warn("Employee details not updated!");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             logger.info("Employee details updated successfully");
-        return new ResponseEntity<>(emp,HttpStatus.OK);
-
+        return new ResponseEntity<>(emp, HttpStatus.OK);
     }
 
     /**
@@ -98,12 +97,11 @@ public class EmployeeController {
      */
     @Operation(summary = "Delete an employee by its id")
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteById(@PathVariable Integer id){
-           if(employeeService.deleteById(id)) {
-               return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
+    ResponseEntity<String> deleteById(@PathVariable final Integer id) {
+           if (employeeService.deleteById(id)) {
+               return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
            }
         logger.warn("Employee Id does not exist");
         return new ResponseEntity<>("Employee Id does not exist", HttpStatus.NOT_FOUND);
-
     }
 }

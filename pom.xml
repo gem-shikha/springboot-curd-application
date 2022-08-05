@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<swagger.ui>1.6.4</swagger.ui>
+		<plugin.checkstyle.version>3.1.2</plugin.checkstyle.version>
+		<plugin.spotbugs.version>4.5.2.0</plugin.spotbugs.version>
 	</properties>
 	<dependencies>
 
@@ -68,6 +70,39 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${plugin.checkstyle.version}</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${plugin.spotbugs.version}</version>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

@@ -14,8 +14,11 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
+    /**
+     * Method to get all the employees
+     */
     @Override
     public List<Employee> getAllEmployee() {
         List<Employee> employeeList = new ArrayList<>();
@@ -28,8 +31,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeList;
     }
 
+    /**
+     * Method to add new employee in the database
+     *
+     * @param employee
+     */
     @Override
-    public Employee addEmployee(Employee employee) {
+    public Employee addEmployee(final Employee employee) {
         Employee emp = null;
         try {
             emp = employeeRepository.save(employee);
@@ -39,8 +47,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return emp;
     }
 
+    /**
+     * Method to fetch employee details by its id
+     *
+     * @param id
+     */
     @Override
-    public Employee getEmployeeById(Integer id) {
+    public Employee getEmployeeById(final Integer id) {
         Employee employee = null;
         try {
             if (id != null) {
@@ -53,8 +66,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    /**
+     *   Method to update the details of existing employee in the database
+     * @param id
+     * @param employee
+     */
     @Override
-    public Employee updateEmployee(Integer id, Employee employee) {
+    public Employee updateEmployee(final Integer id, final Employee employee) {
         Employee empObj = employeeRepository.findById(id).get();
         if (empObj == null) {
             log.error("Exception in updateEmployee() : {} ");
@@ -66,9 +84,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(empObj);
     }
 
-
+    /**
+     *   Method to delete an employee from the database using its id
+     * @param id
+     */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(final Integer id) {
         try {
             employeeRepository.deleteById(id);
             return true;
